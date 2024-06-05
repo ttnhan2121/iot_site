@@ -134,6 +134,7 @@
         client.subscribe("device/lights");
         client.subscribe("device/lightsState");
         client.subscribe("gate/setPass");
+        client.subscribe("device/fanState");
     }
 
     function onConnectionLost(responseObject) {
@@ -150,6 +151,13 @@
         }
         if(message.destinationName === "humi"){
             $('#humi_label').text(message.payloadString);
+        }
+        if(message.destinationName === "device/fanState"){
+            if(message.payloadString === "true"){
+                $("#btnFan").prop( "checked", true);
+            }else{
+                $("#btnFan").prop( "checked", false);
+            }
         }
         if(message.destinationName === "ultra"){
             if(message.payloadString === "true"){

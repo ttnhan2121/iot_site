@@ -59,10 +59,10 @@
                     <div class="card-body m-1 d-flex flex-column">
                         <strong class="my-1">INPUT GATE PASSWORD</strong>
                         <div class="row">
-                            <div class="col-9">
+                            <div class="col-8 col-xl-9">
                                 <input type="password" class="form-control my-1" id="pass" placeholder="Password" maxlength="4" >
                             </div>
-                            <div class="col-3">
+                            <div class="col-4 col-xl-3">
                                 <button class="btn btn-primary my-1 btnPass">Change</button>
                             </div>
                         </div>
