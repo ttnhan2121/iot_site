@@ -1,3 +1,4 @@
+@if(Session::get('isLogin'))
 <!doctype html>
 <html lang="en">
 <head>
@@ -5,7 +6,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Smart Home</title>
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
@@ -24,95 +25,104 @@
     </style>
 </head>
 <body>
-    <div class="bg-light">
-        <div class="row g-2">
-            <div class="col-xl-2 d-xl-block d-sm-none d-md-none d-lg-none d-none bg-white shadow vh-100 rounded-end-4 p-3" style="border-radius: 0 20px 20px 0">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="row">
-                            <h1>Smart Home</h1>
-                        </div>
-                        <a href="{{action('App\Http\Controllers\DashboardController@getView')}}" class="text-decoration-none text-black">
-                            <div class="row my-2 border border-dark p-2 m-1 rounded-4">
-                                <div class="d-flex">
+<div class="bg-light">
+    <div class="row g-2">
+        <div class="col-xl-2 d-xl-block d-sm-none d-md-none d-lg-none d-none bg-white shadow vh-100 rounded-end-4 p-3" style="border-radius: 0 20px 20px 0">
+            <div class="row">
+                <div class="col-12">
+                    <div class="row">
+                        <h1>Smart Home</h1>
+                    </div>
+                    <a href="{{action('App\Http\Controllers\DashboardController@getView')}}" class="text-decoration-none text-black">
+                        <div class="row my-2 border border-dark p-2 m-1 rounded-4">
+                            <div class="d-flex">
                                 <span class="material-symbols-outlined">
                                 dashboard
                                 </span>
-                                    <span class="ps-3">Dashboard</span>
-                                </div>
+                                <span class="ps-3">Dashboard</span>
                             </div>
-                        </a>
-                        <a href="{{action('App\Http\Controllers\ChartController@getView')}}" class="text-decoration-none text-black">
-                            <div class="row my-2 border border-dark p-2 m-1 rounded-4">
-                                <div class="d-flex">
+                        </div>
+                    </a>
+                    <a href="{{action('App\Http\Controllers\ChartController@getView')}}" class="text-decoration-none text-black">
+                        <div class="row my-2 border border-dark p-2 m-1 rounded-4">
+                            <div class="d-flex">
                                 <span class="material-symbols-outlined">
                                 monitoring
                                 </span>
-                                    <span class="ps-3">Chart</span>
-                                </div>
+                                <span class="ps-3">Chart</span>
                             </div>
-                        </a>
-                    </div>
+                        </div>
+                    </a>
                 </div>
             </div>
-            <div class="col-xl-10">
-                <div class="p-3">
-                    <div class="row">
-                        <div class="col d-flex justify-content-between justify-content-xl-end  align-item-center">
-                            <button class="bg-transparent border-0 d-xl-none d-lg-block d-md-block d-sm-block d-block" type="button" data-bs-toggle="offcanvas" data-bs-target="#menu_canvas" aria-controls="offcanvasExample">
+        </div>
+        <div class="col-xl-10">
+            <div class="p-3">
+                <div class="row">
+                    <div class="col d-flex justify-content-between justify-content-xl-end  align-item-center">
+                        <button class="bg-transparent border-0 d-xl-none d-lg-block d-md-block d-sm-block d-block" type="button" data-bs-toggle="offcanvas" data-bs-target="#menu_canvas" aria-controls="offcanvasExample">
                                 <span class="material-symbols-outlined fs-1 p-2" >
                                     menu
                                 </span>
-                            </button>
-                            <button class="bg-transparent border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#account_canvas" aria-controls="offcanvasExample">
+                        </button>
+                        <button class="bg-transparent border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#account_canvas" aria-controls="offcanvasExample">
                                 <span class="material-symbols-outlined fs-1 p-2" >
                                     account_circle
                                 </span>
-                            </button>
-                        </div>
+                        </button>
                     </div>
-                    @yield('content')
                 </div>
+                @yield('content')
             </div>
         </div>
     </div>
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="account_canvas" aria-labelledby="offcanvasExampleLabel">
-        <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasExampleLabel">Account</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body">
-
-        </div>
+</div>
+<div class="offcanvas offcanvas-end" tabindex="-1" id="account_canvas" aria-labelledby="offcanvasExampleLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasExampleLabel">Account</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
-    <div class="offcanvas offcanvas-start" tabindex="-1" id="menu_canvas" aria-labelledby="offcanvasExampleLabel">
-        <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasExampleLabel">Menu</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body">
-            <a href="{{action('App\Http\Controllers\DashboardController@getView')}}" class="text-decoration-none text-black">
-                <div class="row my-2 border border-dark p-2 m-1 rounded-4">
-                    <div class="d-flex">
+    <div class="offcanvas-body">
+        <a href="{{action('App\Http\Controllers\LoginController@getLogout')}}" class="text-decoration-none text-black">
+            <div class="row my-2 border border-dark p-2 m-1 rounded-4">
+                <div class="d-flex">
+                        <span class="material-symbols-outlined">
+                        logout
+                        </span>
+                    <span class="ps-3">Log Out</span>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
+<div class="offcanvas offcanvas-start" tabindex="-1" id="menu_canvas" aria-labelledby="offcanvasExampleLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasExampleLabel">Menu</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <a href="{{action('App\Http\Controllers\DashboardController@getView')}}" class="text-decoration-none text-black">
+            <div class="row my-2 border border-dark p-2 m-1 rounded-4">
+                <div class="d-flex">
                                 <span class="material-symbols-outlined">
                                 dashboard
                                 </span>
-                        <span class="ps-3">Dashboard</span>
-                    </div>
+                    <span class="ps-3">Dashboard</span>
                 </div>
-            </a>
-            <a href="{{action('App\Http\Controllers\ChartController@getView')}}" class="text-decoration-none text-black">
-                <div class="row my-2 border border-dark p-2 m-1 rounded-4">
-                    <div class="d-flex">
+            </div>
+        </a>
+        <a href="{{action('App\Http\Controllers\ChartController@getView')}}" class="text-decoration-none text-black">
+            <div class="row my-2 border border-dark p-2 m-1 rounded-4">
+                <div class="d-flex">
                                 <span class="material-symbols-outlined">
                                 monitoring
                                 </span>
-                        <span class="ps-3">Chart</span>
-                    </div>
+                    <span class="ps-3">Chart</span>
                 </div>
-            </a>
-        </div>
+            </div>
+        </a>
     </div>
+</div>
 </body>
 <script>
     var clientId = "clientId-" + Math.random().toString(16).substr(2, 8);
@@ -174,7 +184,7 @@
             }
         }
         if(message.destinationName === "device/lightsState"){
-             $data = JSON.parse(message.payloadString);
+            $data = JSON.parse(message.payloadString);
             $("#btnLight1").prop( "checked", $data.light0 === 1 ? true : false);
             $("#btnLight2").prop( "checked", $data.light1 === 1 ? true : false);
             $("#btnLight3").prop( "checked", $data.light2 === 1 ? true : false);
@@ -184,3 +194,10 @@
 </script>
 @yield('script')
 </html>
+@else
+    <script>
+        window.location.href = "{{ action('App\Http\Controllers\LoginController@getView')}}";
+    </script>
+@endif
+
+

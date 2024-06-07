@@ -31,5 +31,9 @@ class LoginController extends Controller
         }
     }
 
+    public function getLogout( Request $request){
+        Session::remove('islogin');
+        return redirect()->action('App\Http\Controllers\LoginController@getView');
+    }
 
 }
