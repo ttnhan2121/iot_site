@@ -17,4 +17,4 @@ Route::get('/humi', 'App\Http\Controllers\ChartController@getHumi');
 
 
 
-//\Illuminate\Support\Facades\URL::forceScheme('https');
+\Illuminate\Support\Facades\URL::forceScheme('https');

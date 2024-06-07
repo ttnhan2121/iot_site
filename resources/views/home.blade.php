@@ -1,4 +1,4 @@
-@if(Session::get('isLogin'))
+@if(Session::get('islogin'))
 <!doctype html>
 <html lang="en">
 <head>
@@ -157,10 +157,10 @@
     function onMessageArrived(message) {
         // console.log("onMessageArrived:"+ message.destinationName + " " +message.payloadString);
         if(message.destinationName === "temp"){
-            $('#temp_label').text(message.payloadString);
+            $('#temp_label').text(Math.round(parseFloat(message.payloadString)));
         }
         if(message.destinationName === "humi"){
-            $('#humi_label').text(message.payloadString);
+            $('#humi_label').text(Math.round(parseFloat(message.payloadString)));
         }
         if(message.destinationName === "device/fanState"){
             if(message.payloadString === "true"){
