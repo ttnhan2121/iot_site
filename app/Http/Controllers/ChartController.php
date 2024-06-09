@@ -18,6 +18,12 @@ class ChartController extends Controller
          Log::info($data);
          return response()->json($data);
     }
+    public function getAllTemp(Request $request){
+        $sql = "SELECT * FROM temp t ORDER BY id_temp";
+        $data = DB::select($sql);
+        Log::info($data);
+        return response()->json($data);
+    }
     public function getHumi(Request $request){
         $sql = "SELECT * FROM humi ORDER BY id_humi DESC LIMIT 1";
         $data = DB::select($sql);
@@ -25,4 +31,16 @@ class ChartController extends Controller
         return response()->json($data);
     }
 
+    public function getAllHumi(Request $request){
+        $sql = "SELECT * FROM humi ORDER BY id_humi";
+        $data = DB::select($sql);
+        Log::info($data);
+        return response()->json($data);
+    }
+    public function getLightState(Request $request){
+        $sql = "SELECT * FROM light ORDER BY id";
+        $data = DB::select($sql);
+        Log::info($data);
+        return response()->json($data);
+    }
 }

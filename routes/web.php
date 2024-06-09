@@ -13,8 +13,8 @@ Route::get('/chart', 'App\Http\Controllers\ChartController@getView');
 
 
 Route::get('/temp', 'App\Http\Controllers\ChartController@getTemp');
+Route::get('/allTemp', 'App\Http\Controllers\ChartController@getAllTemp');
 Route::get('/humi', 'App\Http\Controllers\ChartController@getHumi');
-
-
-
+Route::get('/allHumi', 'App\Http\Controllers\ChartController@getAllHumi');
+Route::get('/allLight', 'App\Http\Controllers\ChartController@getLightState');
 \Illuminate\Support\Facades\URL::forceScheme('https');

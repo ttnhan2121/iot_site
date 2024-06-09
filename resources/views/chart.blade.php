@@ -1,17 +1,64 @@
 @extends('home')
 @section('content')
-    <div class="row">
-        <div class="col-xl-6 col-12">
-            <strong>
-                <h1>Temperature</h1>
-            </strong>
-            <canvas id="chartTemp" style="width:100%"></canvas>
+        <div class="row">
+            <div class="col-xl-6 col-12">
+                <strong>
+                    <h1>Temperature</h1>
+                </strong>
+                <canvas id="chartTemp" style="width:100%"></canvas>
+            </div>
+            <div class="col-xl-6 col-12">
+                <strong><h1>Humidity</h1></strong>
+                <canvas id="chartHumi" style="width:100%"></canvas>
+            </div>
         </div>
-        <div class="col-xl-6 col-12">
-            <strong><h1>Humidity</h1></strong>
-            <canvas id="chartHumi" style="width:100%"></canvas>
+        <div class="row">
+            <div class="col-xl-6 col-12" style="height: 400px; overflow: auto">
+                <table class="table table-success " id="table_temp">
+                    <thead>
+                    <tr class="table-success">
+                        <th>STT</th>
+                        <th>Temp Value</th>
+                        <th>Time</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-xl-6 col-12" style="height: 400px; overflow: auto">
+                <table class="table table-info" id="table_humi" >
+                    <thead>
+                    <tr class="table-info">
+                        <th>STT</th>
+                        <th>Humi Value</th>
+                        <th>Time</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
+        <div class="row">
+            <div class="col-xl-6 col-12">
+                <strong>
+                    <h2>Light</h2>
+                </strong>
+                <table class="table table-info" id="table_light" >
+                    <thead>
+                        <tr class="table-info">
+                            <th>STT</th>
+                            <th>ID Light</th>
+                            <th>Light State</th>
+                            <th>Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
 @endsection
 @section('script')
@@ -19,9 +66,99 @@
         document.addEventListener('DOMContentLoaded', function() {
             let getTemp = "{{ action('App\Http\Controllers\ChartController@getTemp') }}"
             let getHumi = "{{ action('App\Http\Controllers\ChartController@getHumi') }}"
+            let getListTemp = "{{ action('App\Http\Controllers\ChartController@getAllTemp') }}"
+            let getListHumi = "{{ action('App\Http\Controllers\ChartController@getAllHumi') }}"
+            let getListLight = "{{ action('App\Http\Controllers\ChartController@getLightState') }}"
             let temp_value;
             let humi_value;
+            fetchListTemp();
+            fetchListHumi();
+            fetchListLight();
+            function fetchListTemp() {
+                fetch(getListTemp)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        populateTempTable(data);
+                    })
+                    .catch(error => {
+                        console.error('There was a problem with the fetch operation:', error);
+                    });
+            }
+            function fetchListHumi() {
+                fetch(getListHumi)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        populateHumiTable(data);
+                    })
+                    .catch(error => {
+                        console.error('There was a problem with the fetch operation:', error);
+                    });
+            }
+            function fetchListLight() {
+                fetch(getListLight)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        populateLightTable(data);
+                    })
+                    .catch(error => {
+                        console.error('There was a problem with the fetch operation:', error);
+                    });
+            }
+            function populateTempTable(data) {
+                $('#table_temp tbody').empty();
 
+                $.each(data, function(index, item) {
+                    let row = '<tr>' +
+                        '<td>' + (index + 1) + '</td>' +
+                        '<td>' + item.temp_value + '</td>' +
+                        '<td>' + item.time_add + '</td>' +
+                        '</tr>';
+                    $('#table_temp tbody').append(row);
+                });
+            }
+            function populateHumiTable(data) {
+                $('#table_humi tbody').empty();
+
+                $.each(data, function(index, item) {
+                    let row = '<tr>' +
+                        '<td>' + (index + 1) + '</td>' +
+                        '<td>' + item.humi_value + '</td>' +
+                        '<td>' + item.time_add + '</td>' +
+                        '</tr>';
+                    $('#table_humi tbody').append(row);
+                });
+            }
+            function populateLightTable(data) {
+                $('#table_light tbody').empty();
+
+                $.each(data, function(index, item) {
+                    let row = '<tr>' +
+                        '<td>' + (index + 1) + '</td>' +
+                        '<td>' + item.id_light + '</td>' +
+                        '<td>' + item.light_state + '</td>' +
+                        '<td>' + item.time+ '</td>' +
+                        '</tr>';
+                    $('#table_light tbody').append(row);
+                });
+            }
+            setInterval(fetchListTemp,10000);
+            setInterval(fetchListHumi,10000);
+            setInterval(fetchListLight,10000);
             function fetchDataTemp() {
                 fetch(getTemp)
                     .then(response => {
@@ -32,7 +169,6 @@
                     })
                     .then(data => {
                         temp_value = data.map(item => item.temp_value);
-                        console.log('Temperature values:', temp_value); // Optional: log temp_value to verify
                     })
                     .catch(error => {
                         console.error('There was a problem with the fetch operation:', error);
@@ -143,10 +279,7 @@
             const tempChart = new Chart(document.getElementById('chartTemp'), tempConfig);
             const humiChart = new Chart(document.getElementById('chartHumi'), humiConfig);
         });
+
+
     </script>
-@endsection
-@section('onMessageArrived')
-
-
-
 @endsection
