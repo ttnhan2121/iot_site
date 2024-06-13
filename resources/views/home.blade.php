@@ -183,6 +183,7 @@
         client.subscribe("device/lights");
         client.subscribe("device/lightsState");
         client.subscribe("gate/setPass");
+        client.subscribe("gate/warning");
         client.subscribe("device/fanState");
     }
 
@@ -225,6 +226,11 @@
                 $('#fan').text("mode_fan");
             }else{
                 $('#fan').text("mode_fan_off");
+            }
+        }
+        if(message.destinationName === "gate/warning"){
+            if(message.payloadString === "false"){
+                sendTele('Có người nhập sai mật khẩu!!!')
             }
         }
         if(message.destinationName === "device/lightsState"){
