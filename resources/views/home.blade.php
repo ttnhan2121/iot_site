@@ -148,7 +148,7 @@
                     return response.json();
                 })
                 .then(data => {
-                    console.log('Message sent to Telegram:', data);
+                    // console.log('Message sent to Telegram:', data);
                 })
                 .catch(error => {
                     console.error('There was a problem with the fetch operation:', error);
