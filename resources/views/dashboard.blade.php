@@ -207,8 +207,8 @@
                     </div>
                     <div class="card-body d-flex flex-column">
                         <div class="row">
-                            <div class="col-9">
-                                <strong>Detection</strong>
+                            <div class="col-9 " >
+                                <strong id="label-dectect">Detecting....</strong>
                             </div>
                             <div class="col-3 d-flex align-items-center justify-content-center">
                                 <span class="material-symbols-outlined d-flex align-items-center justify-content-center" id="detector" style="font-size:50px; width: 50px; height: 50px">

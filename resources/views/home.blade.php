@@ -159,7 +159,7 @@
                 return response.json();
             })
             .then(data => {
-                console.log('Message sent to Telegram:', data);
+                // console.log('Message sent to Telegram:', data);
             })
             .catch(error => {
                 console.error('There was a problem with the fetch operation:', error);
@@ -176,10 +176,9 @@
     function onConnect() {
         // console.log("onConnect");
         toastr.success("Kết nối MQTT thành công!")
-        client.subscribe("temp");
-        client.subscribe("humi");
-        client.subscribe("pir");
-        client.subscribe("ultra");
+        client.subscribe("baocao/temp");
+        client.subscribe("baocao/humi");
+        client.subscribe("baocao/ultra");
         client.subscribe("device/fan");
         client.subscribe("device/lights");
         client.subscribe("device/lightsState");
@@ -196,10 +195,10 @@
 
     function onMessageArrived(message) {
         // console.log("onMessageArrived:"+ message.destinationName + " " +message.payloadString);
-        if(message.destinationName === "temp"){
+        if(message.destinationName === "baocao/temp"){
             $('#temp_label').text(Math.round(parseFloat(message.payloadString)));
         }
-        if(message.destinationName === "humi"){
+        if(message.destinationName === "baocao/humi"){
             $('#humi_label').text(Math.round(parseFloat(message.payloadString)));
         }
         if(message.destinationName === "device/fanState"){
@@ -209,18 +208,15 @@
                 $("#btnFan").prop( "checked", false);
             }
         }
-        if(message.destinationName === "ultra"){
+        if(message.destinationName === "baocao/ultra"){
             if(message.payloadString === "true"){
                 $('#detector').text("detector_status");
-            }else{
-                $('#detector').text("detector");
-            }
-        }
-        if(message.destinationName === "pir"){
-            if(message.payloadString === "true"){
                 sendTele('Phát hiện có vật thể!!!');
-                $('#detector').text("detector_status");
+                $('#label-dectect').text('Dectected!!!!')
+                $('#label-dectect').css('color', "red")
             }else{
+                $('#label-dectect').text('Dectecting....')
+                $('#label-dectect').css('color', "black")
                 $('#detector').text("detector");
             }
         }
