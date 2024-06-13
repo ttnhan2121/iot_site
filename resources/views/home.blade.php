@@ -130,18 +130,6 @@
     const BOT_TOKEN = '7021119044:AAH4Fx3iOAwm0naxckNgiqG5RtVNBeE_ohI';
     const CHAT_ID = '1392540174';
     function sendTele(message) {
-        const payload = {
-            chat_id: CHAT_ID,
-            text: '123'
-        }
-
-        const options = {
-            method: 'POST',
-            contentType: 'application/json',
-            payload: JSON.stringify(payload)
-        }
-
-        console.log(options)
         fetch('https://api.telegram.org/bot' + BOT_TOKEN + '/sendMessage', {
             method: 'POST',
             headers: {
@@ -149,7 +137,7 @@
             },
             body: JSON.stringify({
                 chat_id: CHAT_ID,
-                text: message
+                text: '----------------\n' + message + '\n----------------'
             })
         })
             .then(response => {
@@ -159,7 +147,7 @@
                 return response.json();
             })
             .then(data => {
-                // console.log('Message sent to Telegram:', data);
+                console.log('Message sent to Telegram:', data);
             })
             .catch(error => {
                 console.error('There was a problem with the fetch operation:', error);
@@ -231,6 +219,7 @@
         if(message.destinationName === "gate/warning"){
             if(message.payloadString === "false"){
                 sendTele('Có người nhập sai mật khẩu!!!')
+                toastr.error("Có người nhập sai mật khẩu!!!");
             }
         }
         if(message.destinationName === "device/lightsState"){
