@@ -233,6 +233,26 @@
             $("#btnLight2").prop( "checked", $data.light1 === 1 ? true : false);
             $("#btnLight3").prop( "checked", $data.light2 === 1 ? true : false);
             $("#btnLight4").prop( "checked", $data.light3 === 1 ? true : false);
+            if($data.light0 === 1){
+                $('#light1').text("lightbulb")
+            }else{
+                $('#light1').text("light_off")
+            }
+            if($data.light1 === 1){
+                $('#light2').text("lightbulb")
+            }else{
+                $('#light2').text("light_off")
+            }
+            if($data.light2 === 1){
+                $('#light3').text("lightbulb")
+            }else{
+                $('#light3').text("light_off")
+            }
+            if($data.light3 === 1){
+                $('#light4').text("lightbulb")
+            }else{
+                $('#light4').text("light_off")
+            }
         }
     };
 
