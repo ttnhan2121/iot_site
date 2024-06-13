@@ -220,6 +220,13 @@
                 $('#detector').text("detector");
             }
         }
+        if(message.destinationName === "device/fanState"){
+            if(message.payloadString === "true"){
+                $('#fan').text("mode_fan");
+            }else{
+                $('#fan').text("mode_fan_off");
+            }
+        }
         if(message.destinationName === "device/lightsState"){
             $data = JSON.parse(message.payloadString);
             $("#btnLight1").prop( "checked", $data.light0 === 1 ? true : false);
