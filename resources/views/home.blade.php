@@ -128,30 +128,32 @@
 </body>
 <script>
     const BOT_TOKEN = '7021119044:AAH4Fx3iOAwm0naxckNgiqG5RtVNBeE_ohI';
-    const CHAT_ID = '1392540174';
+    const CHAT_ID = ['1392540174', '5209152359'];
     function sendTele(message) {
-        fetch('https://api.telegram.org/bot' + BOT_TOKEN + '/sendMessage', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                chat_id: CHAT_ID,
-                text: '----------------\n' + message + '\n----------------'
+        CHAT_ID.forEach(chat_id => {
+            fetch('https://api.telegram.org/bot' + BOT_TOKEN + '/sendMessage', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    chat_id: chat_id,
+                    text: '----------------\n' + message + '\n----------------'
+                })
             })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Message sent to Telegram:', data);
+                })
+                .catch(error => {
+                    console.error('There was a problem with the fetch operation:', error);
+                });
         })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log('Message sent to Telegram:', data);
-            })
-            .catch(error => {
-                console.error('There was a problem with the fetch operation:', error);
-            });
     }
     var clientId = "clientId-" + Math.random().toString(16).substr(2, 8);
     var client = new Paho.MQTT.Client("wss://broker.emqx.io:8084/mqtt", clientId);
